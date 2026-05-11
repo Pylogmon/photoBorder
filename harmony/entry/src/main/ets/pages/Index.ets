@@ -1,5 +1,5 @@
 import { webview } from '@kit.ArkWeb';
-import { promptAction, window } from '@kit.ArkUI';
+import { window } from '@kit.ArkUI';
 import { abilityAccessCtrl, common } from '@kit.AbilityKit';
 import { fileIo } from '@kit.CoreFileKit';
 import { util } from '@kit.ArkTS';
@@ -12,6 +12,7 @@ const DEFAULT_STATUS_BAR_COLOR = '#151719';
 const TRANSPARENT_SYSTEM_BAR_COLOR = '#00000000';
 
 type ThemeColorChange = (color: string) => void;
+type ToastMessage = (message: string) => void;
 
 let onThemeColorChange: ThemeColorChange = (_color: string): void => {};
 
@@ -23,10 +24,12 @@ class SystemBarBridge {
 
 class AlbumBridge {
   private context: common.UIAbilityContext;
+  private showToast: ToastMessage;
   private atManager = abilityAccessCtrl.createAtManager();
 
-  constructor(context: common.UIAbilityContext) {
+  constructor(context: common.UIAbilityContext, showToast: ToastMessage) {
     this.context = context;
+    this.showToast = showToast;
   }
 
   async saveImageToAlbum(base64DataUrl: string, fileName: string): Promise<string> {
@@ -46,12 +49,12 @@ class AlbumBridge {
         await fileIo.close(file.fd);
       }
 
-      promptAction.showToast({ message: '已保存到相册' });
+      this.showToast('已保存到相册');
       return uri;
     } catch (error) {
       const err = error as BusinessError;
       hilog.error(DOMAIN, 'ArkWeb', 'Failed to save photo to album. Cause: %{public}s', JSON.stringify(err));
-      promptAction.showToast({ message: '保存到相册失败' });
+      this.showToast('保存到相册失败');
       throw new Error(err.message || 'Failed to save photo to album.');
     }
   }
@@ -106,7 +109,12 @@ function shouldUseLightIcon(color: string): boolean {
 struct Index {
   controller: webview.WebviewController = new webview.WebviewController();
   systemBarBridge: SystemBarBridge = new SystemBarBridge();
-  albumBridge: AlbumBridge = new AlbumBridge(getContext(this) as common.UIAbilityContext);
+  albumBridge: AlbumBridge = new AlbumBridge(
+    this.getUIContext().getHostContext() as common.UIAbilityContext,
+    (message: string): void => {
+      this.showToast(message);
+    }
+  );
   private mainWindow?: window.Window;
   private statusBarContentBaseColor: string = '';
 
@@ -149,6 +157,17 @@ struct Index {
     }).catch((err: BusinessError) => {
       hilog.error(DOMAIN, 'ArkWeb', 'Failed to update status bar. Cause: %{public}s', JSON.stringify(err));
     });
+  }
+
+  private showToast(message: string): void {
+    try {
+      this.getUIContext().getPromptAction().openToast({ message }).catch((err: BusinessError) => {
+        hilog.error(DOMAIN, 'ArkWeb', 'Failed to show toast. Cause: %{public}s', JSON.stringify(err));
+      });
+    } catch (error) {
+      const err = error as BusinessError;
+      hilog.error(DOMAIN, 'ArkWeb', 'Failed to show toast. Cause: %{public}s', JSON.stringify(err));
+    }
   }
 
   build() {
