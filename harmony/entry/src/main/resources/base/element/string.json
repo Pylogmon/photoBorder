@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "Photo Border"
+    },
+    {
+      "name": "album_write_reason",
+      "value": "用于将导出的照片保存到系统相册"
     }
   ]
 }

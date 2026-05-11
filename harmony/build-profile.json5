@@ -6,11 +6,11 @@
         "type": "HarmonyOS",
         "material": {
           "storeFile": "/Users/pylogmon/Downloads/photoBorder.p12",
-          "storePassword": "0000001C7165086C7D8F5B72026CC85CBFB3973A39751B25DF5850291619F09C7EB888F69C15AB847A043F0D",
+          "storePassword": "0000001CCA9B01442A09F5D0C8AC0B22ACFACE7D522BC386577FC95979F919320C586E0F3F32821ADE0510C3",
           "keyAlias": "photoBorder",
-          "keyPassword": "0000001C751034EC9E062BFE3267A7DEE2C029BE84F2B2624E95C84D2A2E7DC23C0C2ACFF5BFEE42B61E9CA8",
+          "keyPassword": "0000001CDE10D4C02DE2C21980C0B047B887FFE2774744711A7BE974B7EA1A9A3C68BD38FC5571D27C33A5BB",
           "signAlg": "SHA256withECDSA",
-          "profile": "/Users/pylogmon/Downloads/photoBorderRelease.p7b",
+          "profile": "/Users/pylogmon/Downloads/photoBorderRelease (1).p7b",
           "certpath": "/Users/pylogmon/Downloads/photoBorder.cer"
         }
       }

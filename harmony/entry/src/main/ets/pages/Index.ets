@@ -1,6 +1,10 @@
 import { webview } from '@kit.ArkWeb';
-import { window } from '@kit.ArkUI';
+import { promptAction, window } from '@kit.ArkUI';
+import { abilityAccessCtrl, common } from '@kit.AbilityKit';
+import { fileIo } from '@kit.CoreFileKit';
+import { util } from '@kit.ArkTS';
 import { BusinessError } from '@kit.BasicServicesKit';
+import { photoAccessHelper } from '@kit.MediaLibraryKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 
 const DOMAIN = 0x0000;
@@ -17,8 +21,70 @@ class SystemBarBridge {
   }
 }
 
+class AlbumBridge {
+  private context: common.UIAbilityContext;
+  private atManager = abilityAccessCtrl.createAtManager();
+
+  constructor(context: common.UIAbilityContext) {
+    this.context = context;
+  }
+
+  async saveImageToAlbum(base64DataUrl: string, fileName: string): Promise<string> {
+    try {
+      await this.requestAlbumPermission();
+
+      const imageBytes = this.decodeImageDataUrl(base64DataUrl);
+      const extension = getSafeFileExtension(fileName);
+      const helper = photoAccessHelper.getPhotoAccessHelper(this.context);
+      const uri = await helper.createAsset(photoAccessHelper.PhotoType.IMAGE, extension);
+      const file = await fileIo.open(uri, fileIo.OpenMode.READ_WRITE | fileIo.OpenMode.CREATE);
+
+      try {
+        const imageBuffer = imageBytes.buffer.slice(imageBytes.byteOffset, imageBytes.byteOffset + imageBytes.byteLength);
+        await fileIo.write(file.fd, imageBuffer);
+      } finally {
+        await fileIo.close(file.fd);
+      }
+
+      promptAction.showToast({ message: '已保存到相册' });
+      return uri;
+    } catch (error) {
+      const err = error as BusinessError;
+      hilog.error(DOMAIN, 'ArkWeb', 'Failed to save photo to album. Cause: %{public}s', JSON.stringify(err));
+      promptAction.showToast({ message: '保存到相册失败' });
+      throw new Error(err.message || 'Failed to save photo to album.');
+    }
+  }
+
+  private async requestAlbumPermission(): Promise<void> {
+    try {
+      const result = await this.atManager.requestPermissionsFromUser(this.context, ['ohos.permission.WRITE_IMAGEVIDEO']);
+      const deniedIndex = result.authResults.findIndex((authResult) => authResult !== 0);
+      if (deniedIndex !== -1) {
+        throw new Error('Album write permission denied.');
+      }
+    } catch (error) {
+      const err = error as BusinessError;
+      hilog.error(DOMAIN, 'ArkWeb', 'Failed to request album permission. Cause: %{public}s', JSON.stringify(err));
+      throw new Error(err.message || 'Failed to request album permission.');
+    }
+  }
+
+  private decodeImageDataUrl(base64DataUrl: string): Uint8Array {
+    const base64Payload = base64DataUrl.replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/, '');
+    const base64Helper = new util.Base64Helper();
+    return base64Helper.decodeSync(base64Payload);
+  }
+}
+
 function expandShortHex(color: string): string {
   return color.replace(/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/, '#$1$1$2$2$3$3');
+}
+
+function getSafeFileExtension(fileName: string): string {
+  const match = fileName.match(/\.([a-zA-Z0-9]+)$/);
+  const extension = match?.[1]?.toLowerCase();
+  return extension === 'jpeg' ? 'jpg' : extension || 'jpg';
 }
 
 function shouldUseLightIcon(color: string): boolean {
@@ -40,6 +106,7 @@ function shouldUseLightIcon(color: string): boolean {
 struct Index {
   controller: webview.WebviewController = new webview.WebviewController();
   systemBarBridge: SystemBarBridge = new SystemBarBridge();
+  albumBridge: AlbumBridge = new AlbumBridge(getContext(this) as common.UIAbilityContext);
   private mainWindow?: window.Window;
   private statusBarContentBaseColor: string = '';
 
@@ -61,6 +128,7 @@ struct Index {
     onThemeColorChange = (_color: string): void => {};
     try {
       this.controller.deleteJavaScriptRegister('photoBorderSystemBar');
+      this.controller.deleteJavaScriptRegister('photoBorderAlbum');
     } catch (err) {
       hilog.warn(DOMAIN, 'ArkWeb', 'Failed to delete JavaScriptProxy. Cause: %{public}s', JSON.stringify(err));
     }
@@ -92,6 +160,13 @@ struct Index {
           object: this.systemBarBridge,
           name: 'photoBorderSystemBar',
           methodList: ['setThemeColor'],
+          controller: this.controller
+        })
+        .javaScriptProxy({
+          object: this.albumBridge,
+          name: 'photoBorderAlbum',
+          methodList: [],
+          asyncMethodList: ['saveImageToAlbum'],
           controller: this.controller
         })
         .onConsole((event) => {

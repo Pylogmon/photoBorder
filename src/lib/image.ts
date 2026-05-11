@@ -42,3 +42,33 @@ export function loadImage(source: string) {
     image.src = source
   })
 }
+
+export async function loadCanvasSafeImage(source: string) {
+  if (!isSvgSource(source)) {
+    return loadImage(source)
+  }
+
+  const response = await fetch(source)
+  if (!response.ok) {
+    throw new Error(`Failed to load SVG asset: ${source}`)
+  }
+
+  const svg = sanitizeSvgForCanvas(await response.text())
+  return loadImage(`data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`)
+}
+
+function isSvgSource(source: string) {
+  return source.split(/[?#]/)[0]?.toLowerCase().endsWith('.svg') ?? false
+}
+
+function sanitizeSvgForCanvas(svg: string) {
+  return svg
+    .replace(/<!doctype[\s\S]*?>/gi, '')
+    .replace(/<\?xml-stylesheet[\s\S]*?\?>/gi, '')
+    .replace(/<script\b[\s\S]*?<\/script>/gi, '')
+    .replace(/<script\b[^>]*\/>/gi, '')
+    .replace(/<foreignObject\b[\s\S]*?<\/foreignObject>/gi, '')
+    .replace(/\s(?:href|xlink:href)=["'](?:https?:|file:|chrome-extension:|moz-extension:|safari-extension:|\/\/)[^"']*["']/gi, '')
+    .replace(/\s(?:src)=["'][^"']*["']/gi, '')
+    .replace(/\son[a-z]+=["'][^"']*["']/gi, '')
+}

@@ -7,7 +7,8 @@ import { defaultMeta } from './data/defaults'
 import { readableBrandColor } from './lib/color'
 import { parseExif } from './lib/exif'
 import { addExifToJpeg } from './lib/exifWriter'
-import { loadImage } from './lib/image'
+import { saveImageBlob } from './lib/harmonyAlbum'
+import { loadCanvasSafeImage, loadImage } from './lib/image'
 import { templates } from './templates'
 import type {
   BrandLogoImages,
@@ -263,6 +264,9 @@ function App() {
 
     try {
       await exportPhoto(selectedPhoto)
+    } catch (error) {
+      console.error(error)
+      window.alert(getExportErrorMessage(error))
     } finally {
       setIsExporting(false)
       setExportProgress('')
@@ -280,6 +284,9 @@ function App() {
         await exportPhoto(photo)
         await delay(180)
       }
+    } catch (error) {
+      console.error(error)
+      window.alert(getExportErrorMessage(error))
     } finally {
       setIsExporting(false)
       setExportProgress('')
@@ -319,12 +326,7 @@ function App() {
       photo.meta,
       hasMetaChanges(photo.meta, photo.originalMeta),
     )
-    const outputUrl = URL.createObjectURL(outputBlob)
-    const link = document.createElement('a')
-    link.href = outputUrl
-    link.download = `${photo.fileName.replace(/\.[^.]+$/, '') || 'photo-border'}-${template}.jpg`
-    link.click()
-    window.setTimeout(() => URL.revokeObjectURL(outputUrl), 0)
+    await saveImageBlob(outputBlob, `${photo.fileName.replace(/\.[^.]+$/, '') || 'photo-border'}-${template}.jpg`)
   }
 
   return (
@@ -641,7 +643,7 @@ async function loadBrandLogoImages(source: BrandLogoSource | undefined) {
   const entries = await Promise.all(
     source.assets.map(async (asset) => {
       try {
-        return [asset.id, await loadImage(asset.url)] as const
+        return [asset.id, await loadCanvasSafeImage(asset.url)] as const
       } catch {
         return undefined
       }
@@ -691,6 +693,10 @@ function getTemplateAdjustmentValue(
 
 function formatTemplateAdjustmentValue(value: number, unit?: string) {
   return unit ? `${value}${unit}` : String(value)
+}
+
+function getExportErrorMessage(error: unknown) {
+  return error instanceof Error && error.message ? `导出失败：${error.message}` : '导出失败，请重试。'
 }
 
 function delay(ms: number) {
