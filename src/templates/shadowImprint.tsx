@@ -56,22 +56,35 @@ function drawExport(
   const modelFont = `500 ${28 * outputScale}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
   const paramsFont = `400 ${22 * outputScale}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
 
-  const rowCenterY = photoRect.y + photoRect.height + margin / 2
+  const borderCenterY = photoRect.y + photoRect.height + margin / 2
 
   context.font = logoFont
   const logoWidth = measureCanvasBrandLogo(context, logo, meta.logo, logoSize, '#ffffff', logoFont)
+
   context.font = modelFont
+  const modelMetrics = measureTextBox(context, meta.device, 28 * outputScale)
   const modelWidth = context.measureText(meta.device).width
+
+  context.font = paramsFont
+  const paramsMetrics = measureTextBox(context, meta.params, 22 * outputScale)
+
   const topRowGap = 16 * outputScale
   const topRowWidth = logoWidth + topRowGap + modelWidth
   const topRowStartX = canvas.width / 2 - topRowWidth / 2
+  const topRowHeight = Math.max(logoSize, modelMetrics.height)
+  const rowGap = 14 * outputScale
+  const contentHeight = topRowHeight + rowGap + paramsMetrics.height
+  const contentTop = borderCenterY - contentHeight / 2
+  const topRowCenterY = contentTop + topRowHeight / 2
+  const modelBaselineY = topRowCenterY - modelMetrics.height / 2 + modelMetrics.ascent
+  const paramsBaselineY = contentTop + topRowHeight + rowGap + paramsMetrics.ascent
 
   drawCanvasBrandLogo(
     context,
     logo,
     meta.logo,
     topRowStartX,
-    rowCenterY - logoSize - 8 * outputScale,
+    topRowCenterY - logoSize / 2,
     logoSize,
     'left',
     '#ffffff',
@@ -81,12 +94,12 @@ function drawExport(
   context.font = modelFont
   context.fillStyle = 'rgba(255, 255, 255, 0.9)'
   context.textAlign = 'left'
-  context.fillText(meta.device, topRowStartX + logoWidth + topRowGap, rowCenterY - 10 * outputScale)
+  context.fillText(meta.device, topRowStartX + logoWidth + topRowGap, modelBaselineY)
 
   context.font = paramsFont
   context.fillStyle = 'rgba(255, 255, 255, 0.75)'
   context.textAlign = 'center'
-  context.fillText(meta.params, canvas.width / 2, rowCenterY + 24 * outputScale)
+  context.fillText(meta.params, canvas.width / 2, paramsBaselineY)
 }
 
 export const shadowImprintTemplate: TemplateDefinition = {
@@ -186,4 +199,16 @@ function drawRoundedRect(
   context.lineTo(x, y + normalizedRadius)
   context.quadraticCurveTo(x, y, x + normalizedRadius, y)
   context.closePath()
+}
+
+function measureTextBox(context: CanvasRenderingContext2D, text: string, fallbackFontSize: number) {
+  const metrics = context.measureText(text)
+  const ascent = metrics.actualBoundingBoxAscent || fallbackFontSize * 0.78
+  const descent = metrics.actualBoundingBoxDescent || fallbackFontSize * 0.22
+
+  return {
+    ascent,
+    descent,
+    height: ascent + descent,
+  }
 }

@@ -24,8 +24,13 @@ function drawExport(
   const watermarkCenterY = watermarkY + watermarkHeight / 2
 
   const logoColor = '#ffffff'
+  const paramsFontSize = 22 * outputScale
+  const paramsFont = `400 ${paramsFontSize}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
 
-  const totalContentHeight = logoSize + spacing * outputScale + 20 * outputScale
+  context.font = paramsFont
+  const paramsMetrics = measureTextBox(context, meta.params, paramsFontSize)
+
+  const totalContentHeight = logoSize + spacing * outputScale + paramsMetrics.height
   const startY = watermarkCenterY - totalContentHeight / 2
 
   const logoY = startY
@@ -42,9 +47,9 @@ function drawExport(
     `600 ${28 * outputScale}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`,
   )
 
-  const paramsY = logoY + logoSize + spacing * outputScale
+  const paramsY = logoY + logoSize + spacing * outputScale + paramsMetrics.ascent
   context.fillStyle = 'rgba(255, 255, 255, 0.9)'
-  context.font = `400 ${22 * outputScale}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
+  context.font = paramsFont
   context.textAlign = 'center'
 
   context.fillText(meta.params, centerX, paramsY)
@@ -73,7 +78,7 @@ export const watermarkTemplate: TemplateDefinition = {
         min: 0,
         max: 40,
         step: 1,
-        defaultValue: 12,
+        defaultValue: 24,
         unit: 'px',
       },
       {
@@ -88,4 +93,16 @@ export const watermarkTemplate: TemplateDefinition = {
     ],
   },
   drawExport,
+}
+
+function measureTextBox(context: CanvasRenderingContext2D, text: string, fallbackFontSize: number) {
+  const metrics = context.measureText(text)
+  const ascent = metrics.actualBoundingBoxAscent || fallbackFontSize * 0.78
+  const descent = metrics.actualBoundingBoxDescent || fallbackFontSize * 0.22
+
+  return {
+    ascent,
+    descent,
+    height: ascent + descent,
+  }
 }
