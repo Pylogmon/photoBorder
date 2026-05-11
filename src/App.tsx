@@ -329,6 +329,14 @@ function App() {
 
   return (
     <main className="app-shell">
+      <input
+        ref={inputRef}
+        className="file-input"
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleFileChange}
+      />
       <section className="workbench">
         <div className="preview-column">
         <div className="preview-stage">
@@ -420,26 +428,6 @@ function App() {
             </div>
             <p>为照片生成带设备信息的边框成片。</p>
           </div>
-
-          <label
-            className="file-picker"
-            onClick={() => {
-              uploadModeRef.current = 'replace'
-            }}
-          >
-            <input
-              ref={inputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              onClick={(event) => event.stopPropagation()}
-              onChange={handleFileChange}
-            />
-            <span>{photos.length ? '更换照片' : '上传照片'}</span>
-            <small>
-              {photos.length ? `${photos.length} 张照片，当前：${selectedPhoto?.fileName}` : '支持多选照片，JPEG 可读取拍摄参数'}
-            </small>
-          </label>
 
           <section className="control-group" aria-labelledby="template-title">
             <h2 id="template-title">边框模板</h2>

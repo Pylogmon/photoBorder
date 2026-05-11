@@ -170,20 +170,7 @@
   font-size: 14px;
 }
 
-.file-picker {
-  position: relative;
-  display: grid;
-  align-content: center;
-  gap: 6px;
-  min-height: 68px;
-  padding: 16px;
-  border: 1px solid #d9dce3;
-  border-radius: 8px;
-  background: #f6f7f9;
-  cursor: pointer;
-}
-
-.file-picker input {
+.file-input {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -194,16 +181,6 @@
   pointer-events: none;
 }
 
-.file-picker span {
-  position: relative;
-  z-index: 1;
-  color: #101216;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.file-picker small,
 .template-card small {
   position: relative;
   z-index: 1;
@@ -484,7 +461,6 @@
 .photo-list__select:focus-visible,
 .photo-list__remove:focus-visible,
 .photo-list__add:focus-visible,
-.file-picker:focus-within,
 .empty-upload:focus-visible {
   outline: 2px solid #1f2937;
   outline-offset: 2px;
@@ -688,7 +664,6 @@
   }
 
   .panel-header,
-  .file-picker,
   .export-actions {
     grid-column: 1 / -1;
   }
