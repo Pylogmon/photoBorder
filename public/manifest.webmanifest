@@ -1,6 +1,6 @@
 {
-  "name": "Photo Border",
-  "short_name": "Photo Border",
+  "name": "浮光水印",
+  "short_name": "浮光水印",
   "description": "为照片生成带设备信息的边框成片。",
   "start_url": "/",
   "scope": "/",

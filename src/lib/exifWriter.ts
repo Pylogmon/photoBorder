@@ -126,7 +126,7 @@ function hasExifHeader(bytes: Uint8Array, offset: number) {
 function buildExifSegment(meta: PhotoMeta) {
   const params = parseCameraParams(meta.params)
   const dateTime = toExifDateTime(meta.date)
-  const software = 'Photo Border'
+  const software = '浮光水印'
 
   const ifd0BaseEntries: IfdEntry[] = [
     asciiEntry(0x010f, meta.maker),

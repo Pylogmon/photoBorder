@@ -414,7 +414,7 @@ function App() {
         <aside className="control-panel" aria-label="照片边框编辑">
           <div className="panel-header">
             <div className="panel-header__top">
-              <h1>Photo Border</h1>
+              <h1>浮光水印</h1>
               <a
                 className="github-link"
                 href="https://github.com/Pylogmon/photoBorder"
