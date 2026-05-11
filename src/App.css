@@ -700,6 +700,10 @@
     min-height: 44svh;
   }
 
+  .photo-strip {
+    padding: 12px 16px 16px;
+  }
+
   .photo-list__item {
     flex-basis: 112px;
   }
