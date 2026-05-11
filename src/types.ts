@@ -14,11 +14,15 @@ export type BrandLogoAsset = {
   url: string
 }
 
+export type BrandLogoStyle = 'dark' | 'light'
+
 export type BrandLogoSource = {
   id: string
   name: string
   aliases: string[]
   scale: number
+  dark: string
+  light: string
   assets: BrandLogoAsset[]
   brandColor?: string
 }
@@ -63,6 +67,7 @@ export type TemplateDefinition = {
   id: TemplateId
   name: string
   description: string
+  defaultLogoStyle: BrandLogoStyle
   controls: TemplateControls
   getCanvasWidth?: (
     image: HTMLImageElement,

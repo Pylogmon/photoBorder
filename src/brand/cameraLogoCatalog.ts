@@ -17,6 +17,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Apple',
     aliases: ['apple', 'iphone', 'ipad'],
     scale: 1,
+    dark: 'Apple_Black.svg',
+    light: 'Apple_White.svg',
     assets: assets(['Apple_Black.svg', 'Apple_White.svg']),
   },
   {
@@ -25,6 +27,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['canon', 'eos', 'powershot'],
     scale: 0.55,
     brandColor: '#c31322',
+    dark: 'Canon_Black.svg',
+    light: 'Canon_White.svg',
     assets: assets(['Canon_Color.svg', 'Canon_Black.svg', 'Canon_White.svg']),
   },
   {
@@ -32,6 +36,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Sony',
     aliases: ['sony', 'alpha', 'a7', 'a9', 'zv-e', 'rx100'],
     scale: 0.55,
+    dark: 'SONY_Black.svg',
+    light: 'SONY_White.svg',
     assets: assets(['SONY_Black.svg', 'SONY_White.svg', 'SONYalpha_Black.svg', 'SONYalpha_White.svg']),
   },
   {
@@ -39,6 +45,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Sony Alpha',
     aliases: ['sony alpha', 'alpha'],
     scale: 1,
+    dark: 'SONYalpha_Black.svg',
+    light: 'SONYalpha_White.svg',
     assets: assets(['SONYalpha_Black.svg', 'SONYalpha_White.svg']),
   },
   {
@@ -47,6 +55,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['nikon', 'z fc', 'z 5', 'z 6', 'z 7', 'z 8', 'z 9'],
     scale: 1,
     brandColor: '#ffd400',
+    dark: 'Nikon_Black.svg',
+    light: 'Nikon_White.svg',
     assets: assets(['Nikon_Color.svg', 'Nikon_Black.svg', 'Nikon_White.svg', 'Nikon_Icon_Color.svg']),
   },
   {
@@ -55,6 +65,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['fujifilm', 'fuji', 'x-t', 'x100', 'gfx'],
     scale: 1,
     brandColor: '#e60012',
+    dark: 'Fujifilm_BLack.svg',
+    light: 'Fujifilm_White.svg',
     assets: assets(['Fujifilm_Color.svg', 'Fujifilm_BLack.svg', 'Fujifilm_White.svg']),
   },
   {
@@ -63,6 +75,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['leica', 'summilux', 'summicron'],
     scale: 1,
     brandColor: '#e20612',
+    dark: 'Leica_Black.svg',
+    light: 'Leica_White.svg',
     assets: assets(['Leica_Color.svg', 'Leica_Black.svg', 'Leica_White.svg']),
   },
   {
@@ -71,6 +85,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['panasonic', 'gh6', 's5m2'],
     scale: 2,
     brandColor: '#0041c0',
+    dark: 'panasonic_Color.svg',
+    light: 'panasonic_Color.svg',
     assets: assets(['panasonic_Color.svg']),
   },
   {
@@ -78,6 +94,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Lumix',
     aliases: ['lumix'],
     scale: 1,
+    dark: 'Lumix_Black.svg',
+    light: 'Lumix_White.svg',
     assets: assets(['Lumix_Black.svg', 'Lumix_White.svg']),
   },
   {
@@ -85,6 +103,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'DJI',
     aliases: ['dji', 'mavic', 'pocket'],
     scale: 0.8,
+    dark: 'DJI_Black.svg',
+    light: 'DJI_White.svg',
     assets: assets(['DJI_Black.svg', 'DJI_White.svg']),
   },
   {
@@ -92,6 +112,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Osmo Action',
     aliases: ['osmo action', 'osmo'],
     scale: 1,
+    dark: 'Osmo_Action_Black.svg',
+    light: 'Osmo_Action_White.svg',
     assets: assets(['Osmo_Action_Black.svg', 'Osmo_Action_White.svg']),
   },
   {
@@ -99,6 +121,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Insta360',
     aliases: ['insta360'],
     scale: 0.75,
+    dark: 'Insta360_Black.svg',
+    light: 'Insta360_White.svg',
     assets: assets(['Insta360_Black.svg', 'Insta360_White.svg']),
   },
   {
@@ -106,6 +130,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'GoPro',
     aliases: ['gopro', 'hero'],
     scale: 1,
+    dark: 'GoPro_Black.svg',
+    light: 'GoPro_White.svg',
     assets: assets(['GoPro_Color.svg', 'GoPro_Black.svg', 'GoPro_White.svg']),
   },
   {
@@ -113,6 +139,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Hasselblad',
     aliases: ['hasselblad'],
     scale: 1,
+    dark: 'hasselblad-Icon-Black.svg',
+    light: 'hasselblad-Icon-White.svg',
     assets: assets(['hasselblad-Icon-Black.svg', 'hasselblad-Icon-White.svg', 'hasselblad-Black.svg', 'hasselblad-White.svg']),
   },
   {
@@ -121,6 +149,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['ricoh', 'gr iii', 'gr3'],
     scale: 0.55,
     brandColor: '#d71920',
+    dark: 'Ricoh_Color.svg',
+    light: 'Ricoh_Color.svg',
     assets: assets(['Ricoh_Color.svg']),
   },
   {
@@ -128,6 +158,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Sigma',
     aliases: ['sigma'],
     scale: 0.55,
+    dark: 'SIGMA_Black.svg',
+    light: 'SIGMA_White.svg',
     assets: assets(['SIGMA_Black.svg', 'SIGMA_White.svg', 'SIGMA_Icon_Black.svg', 'SIGMA_Icon_White.svg']),
   },
   {
@@ -136,6 +168,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['tamron'],
     scale: 0.75,
     brandColor: '#004ea2',
+    dark: 'TAMRON_Black.svg',
+    light: 'TAMRON_White.svg',
     assets: assets(['TAMRON_Color.svg', 'TAMRON_Black.svg', 'TAMRON_White.svg']),
   },
   {
@@ -144,6 +178,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['tokina'],
     scale: 0.65,
     brandColor: '#005baa',
+    dark: 'Tokina_Black.svg',
+    light: 'Tokina_White.svg',
     assets: assets(['Tokina_Color.svg', 'Tokina_Black.svg', 'Tokina_White.svg']),
   },
   {
@@ -152,6 +188,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['zeiss', 'carl zeiss'],
     scale: 1,
     brandColor: '#0050a4',
+    dark: 'ZEISS_Black.svg',
+    light: 'ZEISS_White.svg',
     assets: assets(['ZEISS_Color.svg', 'ZEISS_Black.svg', 'ZEISS_White.svg']),
   },
   {
@@ -160,6 +198,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['minolta'],
     scale: 1,
     brandColor: '#005baa',
+    dark: 'Minolta_Color.svg',
+    light: 'Minolta_Color.svg',
     assets: assets(['Minolta_Color.svg']),
   },
   {
@@ -167,6 +207,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Phase One',
     aliases: ['phase one', 'phaseone'],
     scale: 0.75,
+    dark: 'phaseone.svg',
+    light: 'phaseone_White.svg',
     assets: assets(['phaseone.svg', 'phaseone_Color.svg', 'phaseone_White.svg']),
   },
   {
@@ -174,6 +216,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Samsung',
     aliases: ['samsung', 'galaxy'],
     scale: 1,
+    dark: 'Samsung_black-1.svg',
+    light: 'Samsung_White.svg',
     assets: assets(['Samsung_black-1.svg', 'Samsung_black-2.svg', 'Samsung_White.svg']),
   },
   {
@@ -182,6 +226,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['huawei', 'mate', 'pura'],
     scale: 0.65,
     brandColor: '#d20a2e',
+    dark: 'Huawei_Black.svg',
+    light: 'Huawei_White.svg',
     assets: assets(['Huawei_Color.svg', 'Huawei_Black.svg', 'Huawei_White.svg']),
   },
   {
@@ -190,6 +236,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['xiaomi', 'mi '],
     scale: 1,
     brandColor: '#ff6900',
+    dark: 'Xiaomi_Black.svg',
+    light: 'Xiaomi_White.svg',
     assets: assets(['Xiaomi.svg', 'Xiaomi_Black.svg', 'Xiaomi_White.svg']),
   },
   {
@@ -198,6 +246,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['redmi'],
     scale: 1,
     brandColor: '#ff6900',
+    dark: 'Redmi_Black.svg',
+    light: 'Redmi_White.svg',
     assets: assets(['Redmi_Color.svg', 'Redmi_Black.svg', 'Redmi_White.svg']),
   },
   {
@@ -206,6 +256,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['oppo', 'find x', 'reno'],
     scale: 0.7,
     brandColor: '#008037',
+    dark: 'OPPO_Black.svg',
+    light: 'OPPO_White.svg',
     assets: assets(['OPPO_Color.svg', 'OPPO_Black.svg', 'OPPO_White.svg']),
   },
   {
@@ -214,6 +266,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['vivo'],
     scale: 0.55,
     brandColor: '#415fff',
+    dark: 'VIvo_Black.svg',
+    light: 'VIvo_White.svg',
     assets: assets(['VIvo_Color.svg', 'VIvo_Black.svg', 'VIvo_White.svg']),
   },
   {
@@ -222,6 +276,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['iqoo'],
     scale: 0.55,
     brandColor: '#f6c643',
+    dark: 'IQOO.svg',
+    light: 'IQOO_White.svg',
     assets: assets(['IQOO_Color.svg', 'IQOO.svg', 'IQOO_White.svg']),
   },
   {
@@ -230,6 +286,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['oneplus', 'one plus'],
     scale: 0.55,
     brandColor: '#f5010c',
+    dark: 'Oneplus_Black.svg',
+    light: 'Oneplus_White.svg',
     assets: assets(['Oneplus_Color.svg', 'Oneplus_Black.svg', 'Oneplus_White.svg']),
   },
   {
@@ -237,6 +295,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'Honor',
     aliases: ['honor'],
     scale: 0.55,
+    dark: 'honor.svg',
+    light: 'HONOR_White.svg',
     assets: assets(['honor.svg', 'HONOR_White.svg']),
   },
   {
@@ -245,6 +305,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['meizu'],
     scale: 0.55,
     brandColor: '#00a7ea',
+    dark: 'Meizu-Black.svg',
+    light: 'Meizu-White.svg',
     assets: assets(['Meizu_Color.svg', 'Meizu-Black.svg', 'Meizu-White.svg']),
   },
   {
@@ -252,6 +314,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: 'realme',
     aliases: ['realme'],
     scale: 0.55,
+    dark: 'Realme_Black.svg',
+    light: 'Realme_White.svg',
     assets: assets(['Realme_Black.svg', 'Realme_White.svg']),
   },
   {
@@ -260,6 +324,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['7artisans', '七工匠'],
     scale: 1,
     brandColor: '#e02b20',
+    dark: '七工匠_Black.svg',
+    light: '七工匠_White.svg',
     assets: assets(['七工匠_Color.svg', '七工匠_Black.svg', '七工匠_White.svg']),
   },
   {
@@ -267,6 +333,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: '唯卓仕',
     aliases: ['viltrox', '唯卓仕'],
     scale: 0.55,
+    dark: '唯卓仕_Black.svg',
+    light: '唯卓仕_White.svg',
     assets: assets(['唯卓仕_Black.svg', '唯卓仕_White.svg']),
   },
   {
@@ -275,6 +343,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['sirui', '思锐'],
     scale: 0.55,
     brandColor: '#dd1f26',
+    dark: '思锐_Black.svg',
+    light: '思锐_White.svg',
     assets: assets(['思锐_Color.svg', '思锐_Black.svg', '思锐_White.svg']),
   },
   {
@@ -282,6 +352,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     name: '星曜',
     aliases: ['brightin star', '星曜'],
     scale: 1,
+    dark: '星曜_Black.svg',
+    light: '星曜_White.svg',
     assets: assets(['星曜_Black.svg', '星曜_White.svg']),
   },
   {
@@ -290,6 +362,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['yongnuo', '永诺'],
     scale: 1,
     brandColor: '#e60012',
+    dark: '永诺_Black.svg',
+    light: '永诺_White.svg',
     assets: assets(['永诺_Color.svg', '永诺_Black.svg', '永诺_White.svg']),
   },
   {
@@ -298,6 +372,8 @@ export const cameraLogoCatalog: BrandLogoSource[] = [
     aliases: ['laowa', '老蛙'],
     scale: 0.55,
     brandColor: '#d71920',
+    dark: '老蛙_Black.svg',
+    light: '老蛙_White.svg',
     assets: assets(['老蛙_Color.svg', '老蛙_Black.svg', '老蛙_White.svg']),
   },
 ]

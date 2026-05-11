@@ -59,6 +59,7 @@ export const watermarkTemplate: TemplateDefinition = {
   id: 'watermark',
   name: '浮光水印',
   description: '将 Logo 和参数轻盈叠放在照片底部，可调节水印高度、间距和位置。',
+  defaultLogoStyle: 'light',
   controls: {
     logoStyle: true,
     metaFields: ['logo', 'params'],

@@ -66,6 +66,7 @@ export const whiteBottomTemplate: TemplateDefinition = {
   id: 'white-bottom',
   name: '纯白铭牌',
   description: '适合旅行、街拍和明亮照片，信息分区更清晰。',
+  defaultLogoStyle: 'dark',
   controls: {
     logoStyle: true,
     metaFields: ['logo', 'maker', 'device', 'params', 'date'],

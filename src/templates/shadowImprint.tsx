@@ -106,6 +106,7 @@ export const shadowImprintTemplate: TemplateDefinition = {
   id: 'shadow-imprint',
   name: '光影印记',
   description: '柔焦背景搭配底部水印，Logo+型号在上，参数在下。',
+  defaultLogoStyle: 'light',
   controls: {
     logoStyle: true,
     metaFields: ['logo', 'device', 'params'],

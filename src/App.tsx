@@ -123,7 +123,7 @@ function App() {
       isCurrent = false
     }
   }, [brandLogoSource])
-  const selectedLogoAssetId = getSelectedLogoAssetId(brandLogoSource, selectedLogoAssetIds)
+  const selectedLogoAssetId = getSelectedLogoAssetId(brandLogoSource, selectedLogoAssetIds, selectedTemplate)
   const logoScale = getBrandLogoScale(brandLogoSource, brandLogoScales)
 
   const logo = useMemo(
@@ -233,7 +233,7 @@ function App() {
 
     setSelectedLogoAssetIds((current) => ({
       ...current,
-      [brandLogoSource.id]: assetId,
+      [getSelectedLogoAssetKey(selectedTemplate, brandLogoSource)]: assetId,
     }))
   }
 
@@ -301,7 +301,7 @@ function App() {
     const photoLogo = {
       source: photoBrandLogoSource,
       images: await loadBrandLogoImages(photoBrandLogoSource),
-      selectedAssetId: getSelectedLogoAssetId(photoBrandLogoSource, selectedLogoAssetIds),
+      selectedAssetId: getSelectedLogoAssetId(photoBrandLogoSource, selectedLogoAssetIds, selectedTemplate),
       scale: getBrandLogoScale(photoBrandLogoSource, brandLogoScales),
       brandColor: photoBrandLogoSource?.brandColor,
       lightSurfaceColor: readableBrandColor(photoBrandLogoSource?.brandColor),
@@ -653,11 +653,24 @@ async function loadBrandLogoImages(source: BrandLogoSource | undefined) {
   return Object.fromEntries(entries.filter((entry) => entry !== undefined)) as BrandLogoImages
 }
 
-function getSelectedLogoAssetId(source: BrandLogoSource | undefined, selectedLogoAssetIds: Record<string, string>) {
+function getSelectedLogoAssetId(
+  source: BrandLogoSource | undefined,
+  selectedLogoAssetIds: Record<string, string>,
+  template: TemplateDefinition,
+) {
   if (!source) return undefined
 
-  const selectedAssetId = selectedLogoAssetIds[source.id]
-  return source.assets.some((asset) => asset.id === selectedAssetId) ? selectedAssetId : source.assets[0]?.id
+  const selectedAssetId = selectedLogoAssetIds[getSelectedLogoAssetKey(template, source)]
+  const defaultAssetId = source[template.defaultLogoStyle]
+  const assetIds = new Set(source.assets.map((asset) => asset.id))
+
+  if (selectedAssetId && assetIds.has(selectedAssetId)) return selectedAssetId
+
+  return assetIds.has(defaultAssetId) ? defaultAssetId : source.assets[0]?.id
+}
+
+function getSelectedLogoAssetKey(template: TemplateDefinition, source: BrandLogoSource) {
+  return `${template.id}:${source.id}`
 }
 
 function getBrandLogoScale(source: BrandLogoSource | undefined, brandLogoScales: Record<string, number>) {
