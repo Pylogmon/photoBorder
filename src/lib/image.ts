@@ -1,3 +1,5 @@
+import { cameraLogoSvgs } from 'virtual:camera-logo-svgs'
+
 export function drawContainedImage(
   context: CanvasRenderingContext2D,
   image: HTMLImageElement,
@@ -48,17 +50,48 @@ export async function loadCanvasSafeImage(source: string) {
     return loadImage(source)
   }
 
-  const response = await fetch(source)
-  if (!response.ok) {
-    throw new Error(`Failed to load SVG asset: ${source}`)
+  const bundledSvg = findBundledLogoSvg(source)
+  if (isHarmonyRawfileSource(source) && bundledSvg) {
+    return loadSanitizedSvg(bundledSvg)
   }
 
-  const svg = sanitizeSvgForCanvas(await response.text())
-  return loadImage(`data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`)
+  try {
+    const response = await fetch(source)
+    if (!response.ok) {
+      throw new Error(`Failed to load SVG asset: ${source}`)
+    }
+
+    return loadSanitizedSvg(await response.text())
+  } catch (error) {
+    if (bundledSvg) {
+      return loadSanitizedSvg(bundledSvg)
+    }
+
+    throw error
+  }
+}
+
+function loadSanitizedSvg(svg: string) {
+  const sanitizedSvg = sanitizeSvgForCanvas(svg)
+  return loadImage(`data:image/svg+xml;charset=utf-8,${encodeURIComponent(sanitizedSvg)}`)
+}
+
+function findBundledLogoSvg(source: string) {
+  const fileName = getSourceFileName(source)
+  return fileName ? cameraLogoSvgs[fileName] : undefined
+}
+
+function getSourceFileName(source: string) {
+  const fileName = source.split(/[?#]/)[0]?.split('/').pop()
+  return fileName ? decodeURIComponent(fileName) : undefined
 }
 
 function isSvgSource(source: string) {
   return source.split(/[?#]/)[0]?.toLowerCase().endsWith('.svg') ?? false
+}
+
+function isHarmonyRawfileSource(source: string) {
+  return __HARMONY_RAWFILE__ || source.startsWith('resource://rawfile/')
 }
 
 function sanitizeSvgForCanvas(svg: string) {
