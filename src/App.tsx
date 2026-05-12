@@ -377,7 +377,7 @@ function App() {
                 }}
               >
                 <span>选择照片</span>
-                <strong>上传 JPEG 后会自动识别 EXIF 信息</strong>
+                <strong>选择照片后会自动识别 EXIF 信息</strong>
               </button>
             </div>
           )}
